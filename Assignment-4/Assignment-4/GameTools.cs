@@ -26,9 +26,12 @@ public class GameTools
         }
     }
     
-// Handles user input and ensures a valid, unoccupied position is selected
-    public int GetValidatedMove(char[] board, int position);
-
+    // Handles user input and ensures a valid, unoccupied position is selected
+    public bool GetValidatedMove(char[] board, int position)
+    {
+        return board[position] == '-';
+    }
+    
     // Applies a validated move to the game board
     public void ApplyMove(char[] board, int position, char playerMark);
 
