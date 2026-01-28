@@ -2,7 +2,7 @@ namespace Assignment_4;
 
 public class GameTools
 {
-    private int[] moves = int[9];
+    private int turns = 0;
 
     // Prints the current state of the game board
     public void PrintBoard(char[] board)
@@ -36,6 +36,7 @@ public class GameTools
     public void ApplyMove(char[] board, int position, char playerMark)
     {
         board[position] = playerMark;
+        turns++;
     }
 
     // Checks whether a winning condition has been met
