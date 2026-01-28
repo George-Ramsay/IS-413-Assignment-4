@@ -6,8 +6,11 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        GameTools gameTools = new GameTools();
         Console.WriteLine("Welcome to Tic-Tac-Toe!");
         char[] playerSymbols = [];
+        char[] gameBoard = new char[9];
+        Array.Fill(gameBoard, '-');
 
         while (true)
         {
@@ -40,21 +43,46 @@ internal class Program
 
         while (!isFinished)
         {
+            gameTools.PrintBoard();
+
             while (true)
             {
                 Console.WriteLine($"Player {currentPlayer} {playerSymbols[currentPlayer-1]}, please input a number.");
                 string inputValue = Console.ReadLine();
-                int boardimput;
+                int boardinput;
 
-                if (!int.TryParse(inputValue, out boardimput))
+                if (!int.TryParse(inputValue, out boardinput))
                 {
                     Console.WriteLine("Invalid input. Please enter a valid number.");
                 }
 
+                else if (boardinput > 8 || boardinput < 0)
+                {
+                    Console.WriteLine("Invalid input. Number out of range.");
+                }
+
+                else if (gameTools.GetValidatedMove())
+                {
+                    Console.WriteLine("Invalid input.");
+                }
+
+                else
+                    break;
+
+            }
+
+            if (gameTools.TryGetWinner())
+            {
+                Console.WriteLine($"{currentPlayer} won! Congratulations!");
+                break;
+            }
+            else if (gameTools.IsBoardFull())
+            {
+                Console.WriteLine("It's a draw! Y'all were just too good.");
                 break;
             }
 
-            if(currentPlayer == 1)
+            if (currentPlayer == 1)
             {
                 currentPlayer = 2;
             }
