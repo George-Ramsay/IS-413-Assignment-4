@@ -9,6 +9,8 @@ internal class Program
         GameTools gameTools = new GameTools();
         Console.WriteLine("Welcome to Tic-Tac-Toe!");
         char[] playerSymbols = [];
+        char[] gameBoard = new char[9];
+        Array.Fill(gameBoard, '-');
 
         while (true)
         {
