@@ -33,7 +33,10 @@ public class GameTools
     }
     
     // Applies a validated move to the game board
-    public void ApplyMove(char[] board, int position, char playerMark);
+    public void ApplyMove(char[] board, int position, char playerMark)
+    {
+        board[position] = playerMark;
+    }
 
     // Checks whether a winning condition has been met
     public bool TryGetWinner(char[] board, out char winnerMark);
