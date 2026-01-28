@@ -16,10 +16,7 @@ public class GameTools
 
     // Determines whether the board is full
     public bool IsBoardFull(char[,] board);
-
-    // Evaluates the overall game state (in progress, win, or draw)
-    public GameStatus GetGameStatus(char[,] board, out char winnerMark);
-
+    
     // Converts a linear board position (0–8) into row and column indices
     private (int row, int col) ConvertPosition(int position);
 }
