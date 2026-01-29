@@ -40,11 +40,47 @@ public class GameTools
     }
 
     // Checks whether a winning condition has been met
-    public bool TryGetWinner(char[] board, out char winnerMark);
+    public bool TryGetWinner(char[] board, out char winnerMark)
+    {
+        winnerMark = '-';
+        if (turns < 5) return false;
+
+        int[][] winOptions =
+        [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        foreach (int[] option in winOptions)
+        {
+            var a = option[0];
+            var b = option[1];
+            var c = option[2];
+            
+            if (TripleCheck(board, a, b, c))
+            {
+                winnerMark = board[a];
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Checks to see if all player marks in a line match
+    private bool TripleCheck(char[] board, int index1, int index2, int index3)
+    {
+        return (board[index1] != '-' && board[index1] == board[index2] && board[index1] == board[index3]);
+    }
 
     // Determines whether the board is full
-    public bool IsBoardFull(char[] board);
-    
-    // Converts a linear board position (0–8) into row and column indices
-   // private (int row, int col) ConvertPosition(int position);
+    public bool IsBoardFull(char[] board)
+    {
+        return turns == 9;
+    }
 }
