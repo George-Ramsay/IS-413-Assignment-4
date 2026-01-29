@@ -4,21 +4,24 @@ public class GameTools
 {
     private int turns = 0;
 
+    // Board display
     // Prints the current state of the game board
     public void PrintBoard(char[] board)
     {
+        Console.WriteLine();
         for (int i = 0; i < 3; i++)
         {
-            Console.Write("\n");
             for (int j = 0; j < 3; j++)
             {
                 int index = i * 3 + j;     // converts row/col 
                 Console.Write(board[index]);
 
-                if (j < 2) Console.Write("|"); 
+                if (j < 2) Console.Write(" | "); 
             }
             Console.WriteLine();
+            if (i < 2) Console.WriteLine("--+---+--");
         }
+        Console.WriteLine();
     }
     
     // Handles user input and ensures a valid, unoccupied position is selected
@@ -35,6 +38,7 @@ public class GameTools
         turns++;
     }
 
+    // Win/draw checks
     // Checks whether a winning condition has been met
     public bool TryGetWinner(char[] board, out char winnerMark)
     {

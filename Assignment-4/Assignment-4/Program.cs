@@ -6,15 +6,18 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        // Setup
         GameTools gameTools = new GameTools();
         Console.WriteLine("Welcome to Tic-Tac-Toe!");
+        Console.WriteLine();
         char[] playerSymbols = [];
         char[] gameBoard = new char[9];
         Array.Fill(gameBoard, '-');
 
+        // Player setup
         while (true)
         {
-            Console.WriteLine("Player 1: Would you like to be X or O? ");
+            Console.WriteLine("Player 1: Would you like to be X or O?");
             string input = Console.ReadLine().ToUpper();
             char playerSymbol1 = !string.IsNullOrEmpty(input) ? input[0] : 'X';
             
@@ -27,12 +30,14 @@ internal class Program
             else if (playerSymbol1 == 'X')
             {
                 Console.WriteLine("Great! Player 1 is X and Player 2 is O.");
+                Console.WriteLine();
                 playerSymbols = ['X', 'O'];
                 break;
             }
             else
             {
                 Console.WriteLine("Great! Player 1 is O and Player 2 is X.");
+                Console.WriteLine();
                 playerSymbols = ['O', 'X'];
                 break;
             }
@@ -41,15 +46,19 @@ internal class Program
         bool isFinished = false;
         int currentPlayer = 1;
 
+        // Main game loop
         while (!isFinished)
         {
-            gameTools.PrintBoard();
+            Console.WriteLine("Reference positions:");
+            PrintPositionBoard();
+            gameTools.PrintBoard(gameBoard);
+
+            int boardinput;
 
             while (true)
             {
-                Console.WriteLine($"Player {currentPlayer} {playerSymbols[currentPlayer-1]}, please input a number.");
+                Console.WriteLine($"Player {currentPlayer} ({playerSymbols[currentPlayer-1]}), please input a number (0-8):");
                 string inputValue = Console.ReadLine();
-                int boardinput;
 
                 if (!int.TryParse(inputValue, out boardinput))
                 {
@@ -58,12 +67,12 @@ internal class Program
 
                 else if (boardinput > 8 || boardinput < 0)
                 {
-                    Console.WriteLine("Invalid input. Number out of range.");
+                    Console.WriteLine("Invalid input. Number out of range (0-8).");
                 }
 
-                else if (gameTools.GetValidatedMove())
+                else if (!gameTools.GetValidatedMove(gameBoard, boardinput))
                 {
-                    Console.WriteLine("Invalid input.");
+                    Console.WriteLine("Invalid input. That position is already taken.");
                 }
 
                 else
@@ -71,13 +80,18 @@ internal class Program
 
             }
 
-            if (gameTools.TryGetWinner())
+            gameTools.ApplyMove(gameBoard, boardinput, playerSymbols[currentPlayer - 1]);
+
+            // Game results
+            if (gameTools.TryGetWinner(gameBoard, out var winnerMark))
             {
-                Console.WriteLine($"{currentPlayer} won! Congratulations!");
+                Console.WriteLine();
+                Console.WriteLine($"{winnerMark} won! Congratulations!");
                 break;
             }
-            else if (gameTools.IsBoardFull())
+            else if (gameTools.IsBoardFull(gameBoard))
             {
+                Console.WriteLine();
                 Console.WriteLine("It's a draw! Y'all were just too good.");
                 break;
             }
@@ -93,16 +107,36 @@ internal class Program
         }
     }
 
-    /*/ Initializes and returns an empty 3x3 game board
-    private static char[,] CreateEmptyBoard();
+    private static char[,] CreateEmptyBoard()
+    {
+        var board = new char[3, 3];
 
-    // Displays a numbered reference board (0–8) for user input guidance
-    private static void PrintPositionBoard();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                board[i, j] = '-';
+            }
+        }
 
-    // Determines which player's turn is next
-    private static char GetNextPlayer(char currentPlayer);
+        return board;
+    }
 
-    // Displays the final outcome of the game (win or draw)
-    private static void DisplayGameResult(GameStatus status, char winner);
-    */
+    private static void PrintPositionBoard()
+    {
+        Console.WriteLine();
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                int index = i * 3 + j;
+                Console.Write(index);
+
+                if (j < 2) Console.Write(" | ");
+            }
+            Console.WriteLine();
+            if (i < 2) Console.WriteLine("--+---+--");
+        }
+        Console.WriteLine();
+    }
 }
