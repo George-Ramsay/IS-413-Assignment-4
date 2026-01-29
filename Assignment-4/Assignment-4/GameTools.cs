@@ -10,11 +10,15 @@ public class GameTools
         for (int i = 0; i < 3; i++)
         {
             Console.Write("\n");
-            for (int j = 0; i < 3; i++)
+            for (int j = 0; i < 3; i++) //Needs to be j not i
             {
-                if (board[i] == 2)
+                // int index = i * 3 + j; This will get us to the right index
+                // Console.Write(board[index]);
+                // if (j < 2) Console.Write("|");
+
+                if (board[i] == 2)                                        
                 {
-                    Console.Write(board[i]);
+                    Console.Write(board[i]);   
                 }
                 else
                 {
@@ -22,13 +26,15 @@ public class GameTools
                     Console.Write("|");
                 }
 
-            }
+            }         
+            // Console.WriteLine();
         }
     }
     
     // Handles user input and ensures a valid, unoccupied position is selected
     public bool GetValidatedMove(char[] board, int position)
-    {
+    { 
+        // if (position < 0 || position > 8) return false; Check if the position is within valid range
         return board[position] == '-';
     }
     
@@ -45,7 +51,7 @@ public class GameTools
         winnerMark = '-';
         if (turns < 5) return false;
 
-        int[][] winOptions =
+        int[][] winOptions = //might break if it dosent compile use the older syntax
         [
             [0, 1, 2],
             [3, 4, 5],
