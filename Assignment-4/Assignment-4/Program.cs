@@ -82,17 +82,24 @@ internal class Program
 
             gameTools.ApplyMove(gameBoard, boardinput, playerSymbols[currentPlayer - 1]);
 
+            Console.WriteLine();
+            gameTools.PrintBoard(gameBoard);
+
             // Game results
             if (gameTools.TryGetWinner(gameBoard, out var winnerMark))
             {
                 Console.WriteLine();
                 Console.WriteLine($"{winnerMark} won! Congratulations!");
+                Console.WriteLine("Press any Key to exit...");
+                Console.ReadKey();
                 break;
             }
             else if (gameTools.IsBoardFull(gameBoard))
             {
                 Console.WriteLine();
                 Console.WriteLine("It's a draw! Y'all were just too good.");
+                Console.WriteLine("Press any Key to exit...");
+                Console.ReadKey();
                 break;
             }
 
